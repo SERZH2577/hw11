@@ -1,97 +1,114 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
-import { fetchApi } from './Components/api';
-import { createImageCard } from './Components/templates';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import { fetchImages } from './components/api';
+import { createImageCard } from './components/templates';
+import { refs } from './components/refs';
+// import { onGoesNextPage, onReturnsPreviousPage } from './components/pagination';
 
-Notiflix.Notify.init({
-  position: 'center-top',
-  distance: '85px',
-});
+// const lightbox = new SimpleLightbox('.gallery a', {
+//   /* options */
+// });
 
-const inputRef = document.querySelector('[name="searchQuery"]');
-const btnRef = document.querySelector('.btn');
-const galleryRef = document.querySelector('.gallery');
+refs.btnRef.addEventListener('click', onSearchButton);
+refs.btnNextRef.addEventListener('click', onGoesNextPage);
+refs.btnBackRef.addEventListener('click', onReturnsPreviousPage);
 
-btnRef.addEventListener('click', onLooksForImages);
+let pageNumber = 0;
+let totalHitsRes = 0;
+let inputValue = '';
+let successMessage = false;
 
-// console.log(fetchApi());
-
-function onLooksForImages(e) {
+function onSearchButton(e) {
   e.preventDefault();
+  inputValue = refs.inputRef.value.trim();
 
-  // const imageHits = fetchApi()
-  //   .then(result => result.hits)
-  //   .catch(error => console.log(error));
+  if (refs.inputRef.value.trim() === '') {
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return;
+  }
 
-  // if (imageHits === 0 || imageHits === undefined) {
-  //   Notiflix.Notify.failure(
-  //     'Sorry, there are no images matching your search query. Please try again.'
-  //   );
+  successMessage = false;
+  pageNumber = 1;
 
-  //   return;
-  // }
-  console.log(
-    fetchApi(inputRef.value)
-      .then(result => result.hits)
-      .then(
-        images =>
-          (galleryRef.innerHTML = images
-            .map(image => {
-              return createImageCard(image);
-            })
-            .join(''))
-      )
-  );
-  console.log(inputRef.value);
+  refs.btnBackRef.setAttribute('disabled', '');
+  refs.btnNextRef.removeAttribute('disabled');
+
+  displayImagesOnThePage(inputValue);
+
+  refs.searchFormRef.reset();
 }
 
-const galleryCardTemplate = `<div class="photo-card">
-  <img src="" alt="" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-    </p>
-  </div>
-</div>`;
+function displayImagesOnThePage(val) {
+  fetchImages(val, pageNumber)
+    .then(result => {
+      totalHitsRes = result.totalHits;
+      return result.hits;
+    })
+    .then(images => {
+      if (totalHitsRes === 0) {
+        refs.galleryRef.innerHTML = '';
+        refs.btnNextRef.setAttribute('hidden', '');
+        refs.btnBackRef.setAttribute('hidden', '');
 
-// 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
+        Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
 
-// const BASE_URL = 'https://pixabay.com/api';
-// const API_KEY = '25810966-6fb22a4db6c9a757ebd742847';
+        return;
+      }
 
-// Notiflix.Notify.success('Sol lucet omnibus');
+      if (!successMessage) {
+        Notiflix.Notify.success(`Hooray! We found ${totalHitsRes} images.`);
+        successMessage = true;
+      }
 
-// Notiflix.Notify.warning('Memento te hominem esse');
+      if (totalHitsRes <= 40) {
+        refs.btnNextRef.setAttribute('hidden', '');
+        refs.btnBackRef.setAttribute('hidden', '');
+      } else {
+        refs.btnNextRef.removeAttribute('hidden');
+        refs.btnBackRef.removeAttribute('hidden');
+      }
 
-// Notiflix.Notify.info('Cogito ergo sum');
+      refs.galleryRef.innerHTML = images
+        .map(image => {
+          return createImageCard(image);
+        })
+        .join('');
+    })
+    .catch(error => console.log(error));
 
-// https://pixabay.com/api/?key=25810966-6fb22a4db6c9a757ebd742847&q=yellow+flowers&image_type=photo
+  // let lightbox = new SimpleLightbox('.gallery a');
 
-// page
-// per_page
+  window.scrollBy(0, -10000000);
+}
 
-{
-  // const BASE_URL = 'https://pixabay.com/api';
-  // const API_KEY = '25810966-6fb22a4db6c9a757ebd742847';
-  // const imageType = 'photo';
-  // const imageOrientation = 'horizontal';
-  // export function fetchApi(elem) {
-  //   fetch(
-  //     `${BASE_URL}/?key=${API_KEY}&q=${inputRef.value}&image_type=${imageType}&orientation=${imageOrientation}&safesearch=true`
-  //   ).then(result => {
-  //     // if (!result.ok) {
-  //     //   return result.json().then(error => Promise.reject(error));
-  //     // }
-  //     return result.json();
-  //   });
-  // }
+// onGoesNextPage(pageNumber, inputValue, totalHitsRes, displayImagesOnThePage);
+// onReturnsPreviousPage(pageNumber, inputValue, displayImagesOnThePage);
+
+function onGoesNextPage() {
+  pageNumber += 1;
+
+  if (pageNumber === Math.ceil(totalHitsRes / 40)) {
+    refs.btnNextRef.setAttribute('disabled', '');
+  }
+
+  displayImagesOnThePage(inputValue);
+
+  refs.btnBackRef.removeAttribute('disabled');
+}
+
+function onReturnsPreviousPage() {
+  pageNumber -= 1;
+
+  if (pageNumber === 1) {
+    refs.btnBackRef.setAttribute('disabled', '');
+  }
+
+  displayImagesOnThePage(inputValue);
+
+  refs.btnNextRef.removeAttribute('disabled');
 }

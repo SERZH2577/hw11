@@ -29,17 +29,4 @@ export function createImageCard({
 
     </div>
   `;
-
-  // `
-  // <div class="photo-card">
-  // <a href="images/image2.jpg"><img src="${webformatURL}" alt="${tags}" title="" class="img" loading="lazy"/></a>
-  // </div>
-  // `;
 }
-
-// export function createsPageSwitchingButtons() {
-//   return `
-//     <button type="button" class="btn-switching btn-back-js" hidden="" disabled>Back</button>
-//     <button type="button" class="btn-switching btn-next-js" hidden="">Next</button>
-//   `;
-// }

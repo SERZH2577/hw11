@@ -4,6 +4,10 @@ export function onGoesNextPage(pageNumber, inputValue, totalHits, callback) {
   pageNumber += 1;
 
   if (pageNumber === Math.ceil(totalHits / 40)) {
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+
     refs.btnNextRef.setAttribute('disabled', '');
   }
 

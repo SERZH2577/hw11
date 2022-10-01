@@ -15,8 +15,3 @@ export async function fetchImages(searchParams, pageNumber) {
     console.log(error.message);
   }
 }
-
-// if (!result.ok) {
-//   const error = await result.json();
-//   return Promise.reject(error);
-// }

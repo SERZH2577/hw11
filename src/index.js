@@ -1,14 +1,12 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchImages } from './Components/api';
-import { createImageCard } from './Components/templates';
-import { refs } from './Components/refs';
-// import { onGoesNextPage, onReturnsPreviousPage } from './components/pagination';
+import { fetchImages } from './components/api';
+import { createImageCard } from './components/templates';
+import { refs } from './components/refs';
+import { onGoesNextPage } from './components/pagination';
 
-// const lightbox = new SimpleLightbox('.gallery a', {
-//   /* options */
-// });
+const lightbox = new SimpleLightbox('.gallery a');
 
 refs.btnRef.addEventListener('click', onSearchButton);
 refs.btnNextRef.addEventListener('click', onGoesNextPage);
@@ -78,28 +76,30 @@ function displayImagesOnThePage(val) {
           return createImageCard(image);
         })
         .join('');
+
+      lightbox.refresh();
     })
     .catch(error => console.log(error));
-
-  // let lightbox = new SimpleLightbox('.gallery a');
 
   window.scrollBy(0, -10000000);
 }
 
 // onGoesNextPage(pageNumber, inputValue, totalHitsRes, displayImagesOnThePage);
-// onReturnsPreviousPage(pageNumber, inputValue, displayImagesOnThePage);
 
-function onGoesNextPage() {
-  pageNumber += 1;
+// function onGoesNextPage() {
+//   pageNumber += 1;
 
-  if (pageNumber === Math.ceil(totalHitsRes / 40)) {
-    refs.btnNextRef.setAttribute('disabled', '');
-  }
+//   if (pageNumber === Math.ceil(totalHitsRes / 40)) {
+//     Notiflix.Notify.info(
+//       "We're sorry, but you've reached the end of search results."
+//     );
+//     refs.btnNextRef.setAttribute('disabled', '');
+//   }
 
-  displayImagesOnThePage(inputValue);
+//   displayImagesOnThePage(inputValue);
 
-  refs.btnBackRef.removeAttribute('disabled');
-}
+//   refs.btnBackRef.removeAttribute('disabled');
+// }
 
 function onReturnsPreviousPage() {
   pageNumber -= 1;

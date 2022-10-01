@@ -1,6 +1,6 @@
 {
   "name": "hw11",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "",
   "homepage": "https://serzh2577.github.io/hw11",
   "scripts": {
@@ -24,6 +24,7 @@
     "simplelightbox": "^2.10.3"
   },
   "devDependencies": {
+    "@parcel/transformer-css": "^2.7.0",
     "@parcel/transformer-sass": "^2.7.0",
     "parcel": "^2.7.0",
     "parcel-reporter-clean-dist": "^1.0.4",

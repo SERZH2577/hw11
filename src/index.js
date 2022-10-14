@@ -3,7 +3,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './Components/apiImages.js';
 import { createImageCard } from './Components/templates';
-import { refs } from './Components/refs.js';
+// import { refs } from './Components/refs.js';
 
 const lightbox = new SimpleLightbox('.gallery a');
 

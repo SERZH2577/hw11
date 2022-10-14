@@ -1,10 +1,9 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchImages } from './components/apiImages';
-import { createImageCard } from './components/templates';
-import { refs } from './components/refs';
-import { onGoesNextPage } from './components/pagination';
+import { fetchImages } from './Components/apiImages';
+import { createImageCard } from './Components/templates';
+import { refs } from './Components/refs';
 
 const lightbox = new SimpleLightbox('.gallery a');
 
@@ -84,22 +83,20 @@ function displayImagesOnThePage(val) {
   window.scrollBy(0, -10000000);
 }
 
-// onGoesNextPage(pageNumber, inputValue, totalHitsRes, displayImagesOnThePage);
+function onGoesNextPage() {
+  pageNumber += 1;
 
-// function onGoesNextPage() {
-//   pageNumber += 1;
+  if (pageNumber === Math.ceil(totalHitsRes / 40)) {
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+    refs.btnNextRef.setAttribute('disabled', '');
+  }
 
-//   if (pageNumber === Math.ceil(totalHitsRes / 40)) {
-//     Notiflix.Notify.info(
-//       "We're sorry, but you've reached the end of search results."
-//     );
-//     refs.btnNextRef.setAttribute('disabled', '');
-//   }
+  displayImagesOnThePage(inputValue);
 
-//   displayImagesOnThePage(inputValue);
-
-//   refs.btnBackRef.removeAttribute('disabled');
-// }
+  refs.btnBackRef.removeAttribute('disabled');
+}
 
 function onReturnsPreviousPage() {
   pageNumber -= 1;

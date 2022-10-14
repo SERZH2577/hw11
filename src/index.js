@@ -1,9 +1,9 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchImages } from './Components/apiImages.js';
-import { createImageCard } from './Components/templates.js';
-import { refs } from './Components/refs.js';
+import { fetchImages } from './Components/apiImages';
+import { createImageCard } from './Components/templates';
+import { refs } from '/Components/refs';
 
 const lightbox = new SimpleLightbox('.gallery a');
 

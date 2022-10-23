@@ -11,8 +11,8 @@ refs.btnRef.addEventListener('click', onSearchButton);
 refs.btnNextRef.addEventListener('click', onGoesNextPage);
 refs.btnBackRef.addEventListener('click', onReturnsPreviousPage);
 
-let pageNumber = 0;
 let totalHitsRes = 0;
+let pageNumber = 0;
 let inputValue = '';
 let successMessage = false;
 

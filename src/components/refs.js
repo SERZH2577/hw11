@@ -1,4 +1,4 @@
-export const refs = {
+const refs = {
   searchFormRef: document.querySelector('#search-form'),
   inputRef: document.querySelector('[name="searchQuery"]'),
   btnRef: document.querySelector('.btn'),
@@ -7,3 +7,5 @@ export const refs = {
   btnNextRef: document.querySelector('.btn-next-js'),
   pageSwitchingRef: document.querySelector('.page-switching'),
 };
+
+export default refs;

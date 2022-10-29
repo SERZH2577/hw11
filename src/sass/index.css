@@ -25,11 +25,17 @@
   background-position: center;
 }
 
+p {
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+}
+
 .section {
   margin-left: auto;
   margin-right: auto;
   padding: 45px 15px;
-  max-width: 1200px;
+  max-width: 900px;
 }
 
 .search-form {
@@ -80,12 +86,16 @@
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  width: 1200;
+  margin-left: auto;
+  margin-right: auto;
   padding: 5px 15px 15px 15px;
 }
 
 .info {
   display: flex;
   justify-content: center;
+  padding: 10px;
 }
 
 .photo-card {
@@ -105,23 +115,23 @@
 }
 
 .info-item:not(:last-child) {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .img {
   display: block;
-  width: 100%;
+  width: 283;
+  height: 200px;
   -o-object-fit: cover;
      object-fit: cover;
+  border-radius: 6px 6px 0 0;
 }
 
 .page-switching {
   display: flex;
   justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 20px;
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .btn-switching {
@@ -152,4 +162,11 @@
   background-color: #d48f8f;
   color: #d3cfcf;
   cursor: auto;
+}
+
+[disabled]:active {
+  background-color: #d48f8f;
+  color: #d3cfcf;
+  cursor: auto;
+  font-size: 18px;
 }/*# sourceMappingURL=index.css.map */

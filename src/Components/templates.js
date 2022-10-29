@@ -1,4 +1,4 @@
-export function createImageCard({
+export default function createImageCard({
   webformatURL,
   largeImageURL,
   tags,

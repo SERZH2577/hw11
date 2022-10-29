@@ -26,7 +26,6 @@ export function createImageCard({
         <b>Downloads:</b> ${downloads}
         </p>
       </div>
-
     </div>
   `;
 }

@@ -1,8 +1,8 @@
 const BASE_URL = 'https://pixabay.com/api';
 const API_KEY = '25810966-6fb22a4db6c9a757ebd742847';
 const imageType = 'photo';
-const imageOrientation = 'horizontal';
 const perPage = 40;
+const imageOrientation = 'horizontal';
 
 export async function fetchImages(searchParams, pageNumber) {
   try {
